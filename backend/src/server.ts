@@ -2,6 +2,7 @@ import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import path from "path";
 import dotenv from "dotenv";
+import "express-async-errors";
 
 dotenv.config();
 
@@ -61,6 +62,14 @@ app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
 
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Backend server running on http://0.0.0.0:${PORT}`);
+});
+
+// Safety net: never let the process die from an async error — respond with JSON instead.
+process.on("unhandledRejection", (err) => {
+  console.error("Unhandled rejection:", err);
+});
+process.on("uncaughtException", (err) => {
+  console.error("Uncaught exception:", err);
 });
 
 export default app;
