@@ -97,6 +97,7 @@ export function GoogleSignInButton({ onSuccess }: { onSuccess: (user: SessionUse
 
       callbackRef.current(data.user as SessionUser);
     } catch (error) {
+      console.error("Google sign-in client error:", error);
       const msg =
         error instanceof Error ? error.message : "Google sign-in failed";
       toast.error(msg);

@@ -189,7 +189,8 @@ authRouter.post("/google", async (req: Request, res: Response) => {
       audience: process.env.GOOGLE_CLIENT_ID,
     });
     payload = ticket.getPayload();
-  } catch {
+  } catch (err) {
+    console.error("Google sign-in token verification failed:", err);
     return res.status(401).json({ error: "Google sign-in failed. Please try again." });
   }
 
